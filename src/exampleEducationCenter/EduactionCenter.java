@@ -1,17 +1,11 @@
+package exampleEducationCenter;
+
 import java.util.Scanner;
-public class EduactionCenter {
+public class EduactionCenter implements Commands {
 
     static LessonStorage lessonStorage = new LessonStorage();
     static StudentStorage studentStorage = new StudentStorage();
     static Scanner scanner = new Scanner(System.in);
-
-    private static final int EXIT = 0;
-    private static final int ADD_STUDENT = 1;
-    private static final int ADD_LESSON = 2;
-    private static final int PRINT_STUDENTS = 3;
-    private static final int PRINT_LESSONS = 4;
-    private static final int CHANGE_STUDENT_LESSON = 5;
-    private static final int PRINT_STUDENTS_BY_LESSON_NAME = 6;
 
     public static void main(String[] args) {
         boolean search = true;
@@ -62,7 +56,7 @@ public class EduactionCenter {
         System.out.println("Ներմուծեք առարկայի անունը։ ");
         String lessonName = scanner.nextLine();
         String [] lessonNameStr = lessonName.split(",");
-        Lesson [] lessons = new Lesson[lessonNameStr.length];
+        Lesson[] lessons = new Lesson[lessonNameStr.length];
         int size = 0;
         for (int i = 0; i < lessonNameStr.length; i++) {
             lessons[size++] = lessonStorage.getByName(lessonNameStr[i]);

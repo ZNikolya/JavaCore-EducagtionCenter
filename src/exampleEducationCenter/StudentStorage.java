@@ -1,5 +1,7 @@
+package exampleEducationCenter;
+
 public class StudentStorage {
-    private Student [] students;
+    private Student[] students;
     private int size;
 
     public StudentStorage(int stu) {
@@ -18,7 +20,7 @@ public class StudentStorage {
     }
 
     private void extend() {
-        Student [] student = new Student[students.length + 10];
+        Student[] student = new Student[students.length + 10];
         System.arraycopy(students, 0, student, 0, students.length);
         students = student;
     }

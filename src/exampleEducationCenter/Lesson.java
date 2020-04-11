@@ -1,3 +1,5 @@
+package exampleEducationCenter;
+
 import java.util.Objects;
 
 public class Lesson {

@@ -1,6 +1,8 @@
+package exampleEducationCenter;
+
 public class LessonStorage {
 
-    private Lesson [] lessons;
+    private Lesson[] lessons;
     private int size;
 
     public LessonStorage(int les) {

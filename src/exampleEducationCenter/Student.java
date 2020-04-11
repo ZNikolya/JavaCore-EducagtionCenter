@@ -1,3 +1,5 @@
+package exampleEducationCenter;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -8,7 +10,7 @@ public class Student {
     private String phone;
     private String email;
     private String ID;
-    private Lesson [] lessons;
+    private Lesson[] lessons;
 
     public Student(String name, String surname, String phone, String email, String ID, Lesson[] lessons) {
         this.name = name;
