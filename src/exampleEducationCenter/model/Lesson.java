@@ -1,4 +1,4 @@
-package exampleEducationCenter;
+package exampleEducationCenter.model;
 
 import java.util.Objects;
 

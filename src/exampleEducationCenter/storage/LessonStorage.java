@@ -1,4 +1,7 @@
-package exampleEducationCenter;
+package exampleEducationCenter.storage;
+
+import exampleEducationCenter.exception.DublicateLessonException;
+import exampleEducationCenter.model.Lesson;
 
 public class LessonStorage {
 
@@ -13,7 +16,10 @@ public class LessonStorage {
         lessons = new Lesson[16];
     }
 
-    public void add(Lesson lesson) {
+    public void add(Lesson lesson) throws DublicateLessonException {
+        if (getByName(lesson.getName()) != null ){
+            throw new DublicateLessonException(" Նման անունով դասը " + lesson.getName() + "արդեն կա");
+        }
         if (size == lessons.length) {
             extend();
         }

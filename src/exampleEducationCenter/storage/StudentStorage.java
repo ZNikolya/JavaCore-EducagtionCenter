@@ -1,4 +1,6 @@
-package exampleEducationCenter;
+package exampleEducationCenter.storage;
+
+import exampleEducationCenter.model.Student;
 
 public class StudentStorage {
     private Student[] students;

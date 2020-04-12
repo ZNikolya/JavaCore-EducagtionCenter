@@ -1,5 +1,11 @@
 package exampleEducationCenter;
 
+import exampleEducationCenter.exception.DublicateLessonException;
+import exampleEducationCenter.model.Lesson;
+import exampleEducationCenter.model.Student;
+import exampleEducationCenter.storage.LessonStorage;
+import exampleEducationCenter.storage.StudentStorage;
+
 import java.util.Scanner;
 public class EduactionCenter implements Commands {
 
@@ -12,7 +18,13 @@ public class EduactionCenter implements Commands {
         while (search) {
             printCommands();
             String commandStr = scanner.nextLine();
-            int command = Integer.parseInt(commandStr);
+            int command;
+            try {
+               command = Integer.parseInt(commandStr);
+            } catch (NumberFormatException e){
+                command = -1;
+            }
+
             switch (command) {
                 case EXIT:
                     search = false;
@@ -67,46 +79,57 @@ public class EduactionCenter implements Commands {
     }
 
     private static void addlesson() {
-        System.out.println("Ներմուծեք առարկայի տվյալենրը։ (name, duration, price, lecturerName) ");
-        String lessonData = scanner.nextLine();
-        String[] lessonDataStr = lessonData.split(",");
-        Lesson lesson = new Lesson();
-        lesson.setName(lessonDataStr[0]);
-        lesson.setDuration(Integer.parseInt(lessonDataStr[1]));
-        lesson.setPrice(Integer.parseInt(lessonDataStr[2]));
-        lesson.setLecturerName(lessonDataStr[3]);
-        lessonStorage.add(lesson);
-        lessonStorage.print();
+        try {
+            System.out.println("Ներմուծեք առարկայի տվյալենրը։ (name, duration, price, lecturerName) ");
+            String lessonData = scanner.nextLine();
+            String[] lessonDataStr = lessonData.split(",");
+            Lesson lesson = new Lesson();
+            lesson.setName(lessonDataStr[0]);
+            lesson.setDuration(Integer.parseInt(lessonDataStr[1]));
+            lesson.setPrice(Integer.parseInt(lessonDataStr[2]));
+            lesson.setLecturerName(lessonDataStr[3]);
+            lessonStorage.add(lesson);
+            lessonStorage.print();
+        }catch (ArrayIndexOutOfBoundsException | NumberFormatException e){
+            System.out.println("Incorrect value!");
+            addlesson();
+        } catch (DublicateLessonException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void addstudent() {
-        lessonStorage.print();
-        System.out.println("Ներմուծեք առարկաները։ ");
-        String lessonData = scanner.nextLine();
-        String[] lessonDataStr = lessonData.split(",");
-        Lesson[] lesson = new Lesson[lessonDataStr.length];
-        int size = 0;
-        for (String lessonName : lessonDataStr) {
-            Lesson byName = lessonStorage.getByName(lessonName);
-            if (byName != null) {
-                lesson[size++] = byName;
-            } else {
-                System.err.println("Error");
-                return;
+        try {
+            lessonStorage.print();
+            System.out.println("Ներմուծեք առարկաները։ ");
+            String lessonData = scanner.nextLine();
+            String[] lessonDataStr = lessonData.split(",");
+            Lesson[] lesson = new Lesson[lessonDataStr.length];
+            int size = 0;
+            for (String lessonName : lessonDataStr) {
+                Lesson byName = lessonStorage.getByName(lessonName);
+                if (byName != null) {
+                    lesson[size++] = byName;
+                } else {
+                    System.err.println("Error");
+                    return;
+                }
             }
+            System.out.println("Ներմուծել ուսանողի տվյալները։ (name, surname, phone, email, ID)");
+            String studentData = scanner.nextLine();
+            String[] studenDataStr = studentData.split(",");
+            Student student = new Student();
+            student.setName(studenDataStr[0]);
+            student.setSurname(studenDataStr[1]);
+            student.setPhone(studenDataStr[2]);
+            student.setEmail(studenDataStr[3]);
+            student.setID(studenDataStr[4]);
+            student.setLessons(lesson);
+            studentStorage.add(student);
+        }catch (ArrayIndexOutOfBoundsException | NumberFormatException e){
+            System.out.println("Incorrect value!");
+            addstudent();
         }
-        System.out.println("Ներմուծել ուսանողի տվյալները։ (name, surname, phone, email, ID)");
-        String studentData = scanner.nextLine();
-        String[] studenDataStr = studentData.split(",");
-        Student student = new Student();
-        student.setName(studenDataStr[0]);
-        student.setSurname(studenDataStr[1]);
-        student.setPhone(studenDataStr[2]);
-        student.setEmail(studenDataStr[3]);
-        student.setID(studenDataStr[4]);
-        student.setLessons(lesson);
-        studentStorage.add(student);
-
     }
 
     private static void printCommands() {
